@@ -1,0 +1,15 @@
+---
+include:
+  - project: 'vistaprint-org/technology-operations/developer-experience/krypton/IaC/terraform/templates'
+    file: '/terraform.gitlab-ci-test.yml'
+
+variables:
+  TF_VAR_ecs_cluster_name: $CI_PROJECT_NAME
+  TF_VAR_container_insights: enabled
+  TF_VAR_environment: production
+  TF_VAR_squad: "krypton"
+  TF_VAR_region: "us-east-1"
+  TF_VAR_vpc_id: $CI_PROJECT_NAME
+#  TF_VAR_private_subnets: '["10.0.1.0/24", "10.0.2.0/24"]'
+#  TF_VAR_public_subnets: '["10.0.4.0/24", "10.0.5.0/24"]'
+
