@@ -1,5 +1,10 @@
 resource "aws_ecr_repository" "cxflow-prod" {
-  name = "cxflow/cxflow-prod"
+  name                 = "cxflow/cxflow-prod"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
 
 resource "aws_ecr_lifecycle_policy" "repo-policy" {
