@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "cxflow-dev" {
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "repo-policy" {
+resource "aws_ecr_lifecycle_policy" "dev-repo-policy" {
   repository = aws_ecr_repository.cxflow-dev.name
 
   policy = <<EOF
@@ -58,7 +58,7 @@ resource "aws_ecr_repository" "cxflow-prod" {
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "repo-policy" {
+resource "aws_ecr_lifecycle_policy" "prod-repo-policy" {
   repository = aws_ecr_repository.cxflow-prod.name
 
   policy = <<EOF
