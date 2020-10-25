@@ -9,11 +9,11 @@ resource "aws_lb" "ecs-production" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]
 
-  access_logs {
-    bucket  = aws_s3_bucket.lb_logs.bucket
-    prefix  = "test-lb"
-    enabled = true
-  }
+#  access_logs {
+#    bucket  = aws_s3_bucket.lb_logs.bucket
+#    prefix  = "test-lb"
+#    enabled = true
+#  }
 
   tags = {
     Environment = "production"
@@ -26,7 +26,7 @@ resource "aws_lb_listener" "https_forward" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2015-05"
-  certificate_arn   = "${aws_acm_certificate.cxflow.arn}"
+  certificate_arn   = "aws_acm_certificate.cxflow.arn"
   
   default_action {
     type             = "forward"
