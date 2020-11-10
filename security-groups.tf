@@ -6,7 +6,7 @@ resource "aws_default_security_group" "default" {
 resource "aws_security_group" "lb" {
   name        = "lb-sg"
   vpc_id      = module.vpc.vpc_id
-  description = "Controls access to the Application Load Balancer (ALB)"
+  description = "ECS Application Load Balancer (ALB)"
 
   ingress {
     description = "Allow https to ALB"
@@ -23,6 +23,10 @@ resource "aws_security_group" "lb" {
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "lb-sg"
+  }
 }
 
 resource "aws_security_group" "ecs_tasks" {
@@ -31,10 +35,10 @@ resource "aws_security_group" "ecs_tasks" {
   description = "Allow inbound access from the ALB only"
 
   ingress {
-    description     = "Allow inbound access from the ALB only"
+    description     = "Allow inbound access from the ECS ALB only (SG lb-sg)"
     protocol        = "tcp"
-    from_port       = 4000
-    to_port         = 4000
+    from_port       = 8080
+    to_port         = 8080
     cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.lb.id]
   }
@@ -45,5 +49,9 @@ resource "aws_security_group" "ecs_tasks" {
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ecs-tasks-sg"
   }
 }
