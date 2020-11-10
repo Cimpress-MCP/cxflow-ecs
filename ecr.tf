@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "cxflow-dev" {
   }
 
   encryption_configuration {
-    encryption_type  = "AES256"
+    encryption_type = "AES256"
   }
 }
 
@@ -52,9 +52,6 @@ EOF
 
 
 
-
-
-
 resource "aws_ecr_repository" "cxflow-prod" {
   name                 = "cxflow/cxflow-prod"
   image_tag_mutability = "IMMUTABLE"
@@ -64,7 +61,7 @@ resource "aws_ecr_repository" "cxflow-prod" {
   }
 
   encryption_configuration {
-    encryption_type  = "AES256"
+    encryption_type = "AES256"
   }
 }
 
