@@ -6,7 +6,7 @@ resource "aws_default_security_group" "default" {
 resource "aws_security_group" "lb" {
   name        = "lb-sg"
   vpc_id      = module.vpc.vpc_id
-  description = "ECS Application Load Balancer (ALB)"
+  description = "Controls access to the Application Load Balancer (ALB)"
 
   ingress {
     description = "Allow https to ALB"
