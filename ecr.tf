@@ -1,6 +1,7 @@
 resource "aws_ecr_repository" "cxflow-dev" {
   name                 = "cxflow/cxflow-dev"
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
+  encryption_type      = "AES256"
 
   image_scanning_configuration {
     scan_on_push = true
@@ -28,11 +29,11 @@ resource "aws_ecr_lifecycle_policy" "dev-repo-policy" {
     },
     {
       "rulePriority": 2,
-      "description": "Keep last 2 any images",
+      "description": "Keep last 5 any images",
       "selection": {
         "tagStatus": "any",
         "countType": "imageCountMoreThan",
-        "countNumber": 2
+        "countNumber": 5
       },
       "action": {
         "type": "expire"
@@ -51,7 +52,8 @@ EOF
 
 resource "aws_ecr_repository" "cxflow-prod" {
   name                 = "cxflow/cxflow-prod"
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
+  encryption_type      = "AES256"
 
   image_scanning_configuration {
     scan_on_push = true
@@ -79,11 +81,11 @@ resource "aws_ecr_lifecycle_policy" "prod-repo-policy" {
     },
     {
       "rulePriority": 2,
-      "description": "Keep last 2 any images",
+      "description": "Keep last 5 any images",
       "selection": {
         "tagStatus": "any",
         "countType": "imageCountMoreThan",
-        "countNumber": 2
+        "countNumber": 5
       },
       "action": {
         "type": "expire"
