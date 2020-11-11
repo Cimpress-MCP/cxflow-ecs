@@ -9,11 +9,11 @@ resource "aws_security_group" "lb" {
   description = "Controls access to the Application Load Balancer (ALB)"
 
   ingress {
-    description = "Allow https to ALB"
+    description = "GitLab.com is using the IP range 34.74.90.64/28 for traffic from its Web/API fleet."
     protocol    = "tcp"
     from_port   = 443
     to_port     = 443
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["34.74.90.64/28"]
   }
 
   egress {
