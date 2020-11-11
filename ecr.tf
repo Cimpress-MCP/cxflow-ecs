@@ -1,6 +1,6 @@
 resource "aws_ecr_repository" "cxflow-dev" {
   name                 = "cxflow/cxflow-dev"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
     scan_on_push = true
@@ -54,7 +54,7 @@ EOF
 
 resource "aws_ecr_repository" "cxflow-prod" {
   name                 = "cxflow/cxflow-prod"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
     scan_on_push = true
