@@ -4,3 +4,6 @@ enable_dns_hostnames = true
 
 cidr_block = "10.0.0.0/16"
 
+squad = "krypton"
+
+environment = "production"

@@ -25,7 +25,10 @@ resource "aws_security_group" "lb" {
   }
 
   tags = {
-    Name = "lb-sg"
+    Name        = "lb-sg"
+    Squad       = var.squad
+    Environment = var.environment
+    Terraform   = "true"
   }
 }
 
@@ -39,7 +42,6 @@ resource "aws_security_group" "ecs_tasks" {
     protocol        = "tcp"
     from_port       = 8080
     to_port         = 8080
-    cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.lb.id]
   }
 
@@ -52,6 +54,9 @@ resource "aws_security_group" "ecs_tasks" {
   }
 
   tags = {
-    Name = "ecs-tasks-sg"
+    Name        = "ecs-tasks-sg"
+    Squad       = var.squad
+    Environment = var.environment
+    Terraform   = "true"
   }
 }
