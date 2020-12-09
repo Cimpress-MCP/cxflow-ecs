@@ -13,8 +13,9 @@ data "aws_iam_policy_document" "ecs_task_execution_role" {
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name               = "ecs-production-execution-role"
+  name = "ecs-execution-role-${name}"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_execution_role.json
+  tags = local.all_tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {

@@ -4,7 +4,7 @@ resource "aws_default_security_group" "default" {
 }
 
 resource "aws_security_group" "lb" {
-  name        = "lb-sg"
+  name        = "lb-sg-${name}"
   vpc_id      = module.vpc.vpc_id
   description = "Controls access to the Application Load Balancer (ALB)"
 
@@ -24,16 +24,13 @@ resource "aws_security_group" "lb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name        = "lb-sg"
-    Squad       = var.squad
-    Environment = var.environment
-    Terraform   = "true"
-  }
+  tags = merge(local.all_tags, {
+    Name = "lb-sg"
+  })
 }
 
 resource "aws_security_group" "ecs_tasks" {
-  name        = "ecs-tasks-sg"
+  name        = "ecs-tasks-sg-${name}"
   vpc_id      = module.vpc.vpc_id
   description = "Allow inbound access from the ALB only"
 
@@ -53,10 +50,7 @@ resource "aws_security_group" "ecs_tasks" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name        = "ecs-tasks-sg"
-    Squad       = var.squad
-    Environment = var.environment
-    Terraform   = "true"
-  }
+  tags = merge(local.all_tags, {
+    Name = "ecs-tasks-sg-${name}"
+  })
 }

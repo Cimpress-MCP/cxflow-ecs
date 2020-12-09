@@ -1,70 +1,68 @@
 variable "region" {
-  type        = string
-  default     = "us-east-1"
+  type = string
+  default = "us-east-1"
   description = "AWS Region"
 }
 
-variable "vpc_id" {
-  type    = string
-  default = ""
+variable "name" {
+  type = string
+  description = "A name to apply to all resources"
 }
 
 variable "squad" {
-  type        = string
-  default     = ""
+  type = string
+  default = ""
   description = "Squad, which could be your squad name or abbreviation, e.g. 'krypton' or 'kyp'"
 }
 
 variable "environment" {
-  type        = string
-  default     = ""
+  type = string
+  default = ""
   description = "Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT'"
 }
 
 variable "cidr_block" {
-  type    = string
+  type = string
   default = ""
 }
 
 variable "private_subnets" {
-  type    = list(string)
+  type = list(string)
   default = []
 }
 
 variable "public_subnets" {
-  type    = list(string)
+  type = list(string)
   default = []
 }
 
 variable "enable_dns_support" {
-  type    = bool
+  type = bool
   default = false
 }
 
 variable "enable_dns_hostnames" {
-  type    = bool
+  type = bool
   default = false
 }
 
 variable "enable_nat_gateway" {
-  type    = bool
+  type = bool
   default = false
 }
 
 variable "single_nat_gateway" {
-  type    = bool
+  type = bool
   default = false
 }
 
-variable "ecs_cluster_name" {
-  type    = string
-  default = ""
-}
-
 variable "container_insights" {
-  type    = string
+  type = string
   default = "enabled"
 }
 
-
-
+variable "tags" {
+  type = map
+  default = {}
+  description = "Additional tags to apply to all resources"
+}
