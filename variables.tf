@@ -11,7 +11,7 @@ variable "squad" {
 
 variable "environment" {
   type = string
-  default = ""
+  default = "development"
   description = "Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT'"
 }
 
