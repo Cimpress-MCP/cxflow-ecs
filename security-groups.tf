@@ -30,7 +30,7 @@ resource "aws_security_group" "lb" {
 }
 
 resource "aws_security_group" "ecs_tasks" {
-  name        = "ecs-tasks-sg-${name}"
+  name        = "ecs-tasks-sg-${var.name}"
   vpc_id      = module.vpc.vpc_id
   description = "Allow inbound access from the ALB only"
 
@@ -51,6 +51,6 @@ resource "aws_security_group" "ecs_tasks" {
   }
 
   tags = merge(local.all_tags, {
-    Name = "ecs-tasks-sg-${name}"
+    Name = "ecs-tasks-sg-${var.name}"
   })
 }
