@@ -1,9 +1,3 @@
-variable "region" {
-  type = string
-  default = "us-east-1"
-  description = "AWS Region"
-}
-
 variable "name" {
   type = string
   description = "A name to apply to all resources"
@@ -23,37 +17,32 @@ variable "environment" {
 
 variable "cidr_block" {
   type = string
-  default = ""
+  default = "10.0.0.0/16"
+  description = "The CIDR block to apply to the full VPC"
 }
 
 variable "private_subnets" {
   type = list(string)
-  default = []
+  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  description = "A list of CIDR blocks to use for the private subnets"
 }
 
 variable "public_subnets" {
   type = list(string)
-  default = []
+  default = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+  description = "A list of CIDR blocks to use for the public subnets"
 }
 
 variable "enable_dns_support" {
   type = bool
   default = false
+  description = "Set to true to enable DNS support in the VPC"
 }
 
 variable "enable_dns_hostnames" {
   type = bool
   default = false
-}
-
-variable "enable_nat_gateway" {
-  type = bool
-  default = false
-}
-
-variable "single_nat_gateway" {
-  type = bool
-  default = false
+  description = "Set to true to enable DNS hostnames in the VPC"
 }
 
 variable "container_insights" {
