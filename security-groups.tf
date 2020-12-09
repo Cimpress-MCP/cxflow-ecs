@@ -4,7 +4,7 @@ resource "aws_default_security_group" "default" {
 }
 
 resource "aws_security_group" "lb" {
-  name        = "lb-sg-${name}"
+  name        = "lb-sg-${var.name}"
   vpc_id      = module.vpc.vpc_id
   description = "Controls access to the Application Load Balancer (ALB)"
 

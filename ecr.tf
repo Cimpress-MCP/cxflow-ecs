@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "cxflow" {
-  name                 = "cxflow/cxflow-${environment}"
+  name                 = "cxflow/cxflow-${var.environment}"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
