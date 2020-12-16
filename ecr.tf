@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "cxflow" {
-  name                 = "cxflow/cxflow-${var.environment}"
+  name = "cxflow-${var.environment}"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -9,13 +9,9 @@ resource "aws_ecr_repository" "cxflow" {
   encryption_configuration {
     encryption_type = "AES256"
   }
-
-  tags = local.all_tags
 }
 
-
-
-resource "aws_ecr_lifecycle_policy" "dev-repo-policy" {
+resource "aws_ecr_lifecycle_policy" "prod-repo-policy" {
   repository = aws_ecr_repository.cxflow.name
 
   policy = <<EOF

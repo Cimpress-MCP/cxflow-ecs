@@ -1,6 +1,27 @@
+variable "region" {
+  type = string
+  description = "The region to deploy the cluster into"
+}
+
 variable "name" {
   type = string
   description = "A name to apply to all resources"
+}
+
+variable "dns_zone" {
+  type = string
+  description = "The name of the Route 53 DNS zone to use for the domain name"
+}
+
+variable "domain" {
+  type = string
+  description = "The domain to host the cluster on"
+}
+
+variable "desired_service_count" {
+  type = number
+  description = "The desired number of instances in the ECS service"
+  value = 1
 }
 
 variable "squad" {
