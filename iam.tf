@@ -64,6 +64,7 @@ data "aws_iam_policy_document" "ecs_task_policies" {
     resources = [
       "*"
     ]
+  }
 }
 
 resource "aws_iam_role_policy" "ecs_task_policies" {
@@ -72,3 +73,22 @@ resource "aws_iam_role_policy" "ecs_task_policies" {
   policy = data.aws_iam_policy_document.ecs_task_policies.json
 }
 
+resource "aws_iam_role" "ecs_service" {
+  name = "${var.name}-ecs-service"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
