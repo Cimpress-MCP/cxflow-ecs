@@ -21,7 +21,7 @@ variable "domain" {
 variable "desired_service_count" {
   type = number
   description = "The desired number of instances in the ECS service"
-  value = "1"
+  default = "1"
 }
 
 variable "squad" {
