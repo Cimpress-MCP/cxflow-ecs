@@ -9,7 +9,7 @@ data "aws_route53_zone" "myzone" {
 
 resource "aws_route53_record" "route53_record" {
    depends_on = [
-    "aws_acm_certificate.cert"
+    aws_acm_certificate.cert
   ]
 
   allow_overwrite = true
