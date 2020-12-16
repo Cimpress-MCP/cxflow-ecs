@@ -67,5 +67,6 @@ resource "aws_route53_record" "vault_elb" {
   alias {
     name = aws_lb.cxflow.dns_name
     zone_id = aws_lb.cxflow.zone_id
+    evaluate_target_health = true
   }
 }
