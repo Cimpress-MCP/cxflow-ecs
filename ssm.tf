@@ -49,7 +49,7 @@ resource "aws_ssm_parameter" "checkmarx_token" {
 resource "aws_ssm_parameter" "checkmarx_url" {
   name = "/cxflow/${var.environment}/checkmarx/url"
   description = "The URL of the checkmarx server"
-  type = "Sring"
+  type = "String"
   value = "Filler"
   tags = local.all_tags
 

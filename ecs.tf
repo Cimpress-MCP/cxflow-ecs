@@ -15,7 +15,7 @@ resource "aws_ecs_cluster" "cluster" {
 data "template_file" "task_definition" {
   template = file("${path.module}/cxflow-task-definition.json")
 
-  vars {
+  vars = {
     environment = var.environment
     account_id = data.aws_caller_identity.current.account_id
     task_role_arn = aws_iam_role.ecs_task_execution_role.arn

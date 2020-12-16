@@ -33,9 +33,7 @@ resource "aws_lb_listener" "cxflow" {
   port = "443"
   protocol = "HTTPS"
   ssl_policy = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  ##############
-  ##########
-  # certificate_arn = data.aws_acm_certificate.cert.arn
+  certificate_arn = aws_acm_certificate_validation.cert_validation.certificate_arn
 
   default_action {
     type = "forward"
@@ -67,7 +65,7 @@ resource "aws_route53_record" "vault_elb" {
   type = "A"
 
   alias {
-    name = aws_lb.main_alb.dns_name
-    zone_id = aws_lb.main_alb.zone_id
+    name = aws_lb.cxflow.dns_name
+    zone_id = var.zone_id
   }
 }
