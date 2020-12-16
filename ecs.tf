@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "cxflow" {
 
 resource "aws_ecs_service" "cxflow" {
   name = var.name
-  cluster = "aws_ecs_cluster.cluster.id
+  cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.cxflow.arn
   desired_count = var.desired_service_count
   iam_role = aws_iam_role.ecs_service.name
