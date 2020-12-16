@@ -66,6 +66,6 @@ resource "aws_route53_record" "vault_elb" {
 
   alias {
     name = aws_lb.cxflow.dns_name
-    zone_id = var.zone_id
+    zone_id = aws_lb.cxflow.zone_id
   }
 }
