@@ -23,6 +23,8 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+#"arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/cxflow/${var.environment}/*",
+
 data "aws_iam_policy_document" "ecs_task_policies" {
   statement {
     effect = "Allow"
@@ -35,7 +37,7 @@ data "aws_iam_policy_document" "ecs_task_policies" {
     ]
 
     resources = [
-      "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/cxflow/${var.environment}/*",
+      "*"
     ]
   }
   statement {
