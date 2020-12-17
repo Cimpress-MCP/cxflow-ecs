@@ -8,7 +8,7 @@
       }
     ],
     "essential": true,
-    "name": "cxflow",
+    "name": "cxflow-${environment}",
     "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/cxflow-${environment}:latest",
     "logConfiguration": {
       "logDriver": "awslogs",

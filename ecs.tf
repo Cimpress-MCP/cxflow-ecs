@@ -23,7 +23,7 @@ data "template_file" "container_definitions" {
 }
 
 resource "aws_ecs_task_definition" "cxflow" {
-  family = "cxflow"
+  family = "cxflow-${environment}"
   container_definitions = data.template_file.container_definitions.rendered
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn = aws_iam_role.ecs_task_execution_role.arn
