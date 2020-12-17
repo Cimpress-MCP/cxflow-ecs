@@ -8,11 +8,6 @@ data "aws_route53_zone" "default" {
   name = var.dns_zone
 }
 
-# Discover SSL Cert
-data "aws_acm_certificate" "cert" {
-  domain = var.domain
-}
-
 resource "aws_lb" "cxflow" {
   name = local.short_name
   load_balancer_type = "application"
