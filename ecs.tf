@@ -38,7 +38,7 @@ resource "aws_ecs_service" "cxflow" {
   iam_role = aws_iam_role.ecs_service.name
 
   network_configuration {
-    subnets = module.vpc.public_subnets.*.ids
+    subnets = module.vpc.public_subnets
     security_groups = [aws_security_group.ecs_tasks.id]
   }
 
