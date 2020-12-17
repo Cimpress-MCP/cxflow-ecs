@@ -36,7 +36,6 @@ data "aws_iam_policy_document" "ecs_task_policies" {
 
     resources = [
       "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/cxflow/${var.environment}/*",
-      "arn:aws:kms:us-east-1:${data.aws_caller_identity.current.account_id}:key/e02fd502-94d9-4586-bef2-afdc69ae1cf3"
     ]
   }
   statement {
