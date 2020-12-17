@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "ecs_task_policies" {
     ]
 
     resources = [
-      "{aws_ecr_repository.cxflow.arn}"
+      aws_ecr_repository.cxflow.arn
     ]
   }
   statement {

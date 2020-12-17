@@ -12,20 +12,25 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 
-data "template_file" "task_definition" {
-  template = file("${path.module}/cxflow-task-definition.json")
+data "template_file" "container_definitions" {
+  template = file("${path.module}/ecs-container-definitions.json")
 
   vars = {
     environment = var.environment
     account_id = data.aws_caller_identity.current.account_id
-    task_role_arn = aws_iam_role.ecs_task_execution_role.arn
     region = var.region
   }
 }
 
 resource "aws_ecs_task_definition" "cxflow" {
   family = "cxflow"
-  container_definitions = data.template_file.task_definition.rendered
+  container_definitions = data.template_file.container_definitions.rendered
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  network_mode = "awsvpc"
+  memory = "2048"
+  cpu = "512"
+  requires_compatibilities = "FARGATE"
 
   tags = local.all_tags
 }

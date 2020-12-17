@@ -1,22 +1,25 @@
-{
-  "containerDefinitions": [{
-    "portMappings": [{
+[
+  {
+    "portMappings": [
+      {
         "hostPort": 8080,
         "containerPort": 8080,
         "protocol": "http"
-      }],
-      "essential": true,
-      "name": "cxflow",
-      "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/cxflow-${environment}:latest",
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "/app/cxflow",
-          "awslogs-region": "${region}",
-          "awslogs-stream-prefix": "cx-"
-        }
-      },
-      "secrets": [{
+      }
+    ],
+    "essential": true,
+    "name": "cxflow",
+    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/cxflow-${environment}:latest",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/app/cxflow",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "cx-"
+      }
+    },
+    "secrets": [
+      {
         "name": "CHECKMARX_USERNAME",
         "valueFrom": "/cxflow/${environment}/checkmarx/username"
       },
@@ -39,16 +42,7 @@
       {
         "name": "GITLAB_WEBHOOK_TOKEN",
         "valueFrom": "/cxflow/${environment}/gitlab/webhook-token"
-      }]
-    }
-  ],
-  "networkMode": "awsvpc",
-  "executionRoleArn": "${task_role_arn}",
-  "taskRoleArn": "${task_role_arn}",
-  "memory": "2048",
-  "cpu": "512",
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
-  "family": "cxflow"
-}
+      }
+    ]
+  }
+]
