@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "cxflow" {
   network_mode = "awsvpc"
   memory = "2048"
   cpu = "512"
-  requires_compatibilities = "FARGATE"
+  requires_compatibilities = ["FARGATE"]
 
   tags = local.all_tags
 }
