@@ -56,3 +56,59 @@ resource "aws_ecs_service" "cxflow" {
     "Name" = var.name
   })
 }
+
+resource "aws_appautoscaling_target" "cxflow" {
+  service_namespace = "ecs"
+  resource_id = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.cxflow.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  min_capacity = var.desired_service_count
+  max_capacity = var.desired_service_count
+
+  depends_on = [
+    aws_ecs_service.cxflow,
+  ]
+}
+
+resource "aws_appautoscaling_policy" "up" {
+  name = "${var.name}-${var.environment}-up"
+  service_namespace = "ecs"
+  resource_id = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.cxflow.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+
+  step_scaling_policy_configuration {
+    adjustment_type = "ChangeInCapacity"
+    cooldown = "300"
+    metric_aggregation_type = "Average"
+
+    step_adjustment {
+      metric_interval_lower_bound = 0
+      scaling_adjustment = 1
+    }
+  }
+
+  depends_on = [
+    aws_appautoscaling_target.cxflow,
+  ]
+}
+
+resource "aws_appautoscaling_policy" "down" {
+  name = "${var.name}-${var.environment}-down"
+  service_namespace = "ecs"
+  resource_id = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.cxflow.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+
+  step_scaling_policy_configuration {
+    adjustment_type = "ChangeInCapacity"
+    cooldown = "300"
+    metric_aggregation_type = "Average"
+
+    step_adjustment {
+      metric_interval_upper_bound = 0
+      scaling_adjustment = -1
+    }
+  }
+
+  depends_on = [
+    aws_appautoscaling_target.cxflow,
+  ]
+}
