@@ -50,9 +50,7 @@ data "aws_iam_policy_document" "ecs_task_policies" {
       "ecr:BatchGetImage"
     ]
 
-    resources = [
-      aws_ecr_repository.cxflow.arn
-    ]
+    resources = ["*"]
   }
   statement {
     effect = "Allow"
