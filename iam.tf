@@ -58,6 +58,7 @@ data "aws_iam_policy_document" "ecs_task_policies" {
 
     actions = [
       "logs:CreateLogStream",
+      "logs:CreateLogGroup",
       "logs:PutLogEvents"
     ]
 

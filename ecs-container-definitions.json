@@ -13,9 +13,9 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/app/cxflow",
+        "awslogs-group": "/app/cxflow-${environment}",
         "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "cx-"
+        "awslogs-stream-prefix": "cxflow-"
       }
     },
     "secrets": [
