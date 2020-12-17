@@ -40,6 +40,7 @@ resource "aws_ecs_service" "cxflow" {
   cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.cxflow.arn
   desired_count = var.desired_service_count
+  launch_type = "FARGATE"
 
   network_configuration {
     subnets = module.vpc.public_subnets
