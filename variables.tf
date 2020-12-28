@@ -54,18 +54,6 @@ variable "public_subnets" {
   description = "A list of CIDR blocks to use for the public subnets"
 }
 
-variable "enable_dns_support" {
-  type = bool
-  default = true
-  description = "Set to true to enable DNS support in the VPC"
-}
-
-variable "enable_dns_hostnames" {
-  type = bool
-  default = true
-  description = "Set to true to enable DNS hostnames in the VPC"
-}
-
 variable "container_insights" {
   type = string
   default = "enabled"

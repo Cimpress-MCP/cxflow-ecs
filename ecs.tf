@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "cluster" {
-  name = var.name
+  name = "cxflow-${var.environment}"
 
   setting {
     name = "containerInsights"
@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "cxflow" {
 }
 
 resource "aws_ecs_service" "cxflow" {
-  name = var.name
+  name = "cxflow-${var.environment}"
   cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.cxflow.arn
   desired_count = var.desired_service_count
@@ -45,71 +45,10 @@ resource "aws_ecs_service" "cxflow" {
   network_configuration {
     subnets = module.vpc.public_subnets
     security_groups = [aws_security_group.ecs_tasks.id]
-  }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.cxflow.id
-    container_name = aws_ecr_repository.cxflow.name
-    container_port = "8080"
+    assign_public_ip = true
   }
 
   tags = merge(local.all_tags, {
-    "Name" = var.name
+    "Name" = "cxflow-${var.environment}"
   })
-}
-
-resource "aws_appautoscaling_target" "cxflow" {
-  service_namespace = "ecs"
-  resource_id = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.cxflow.name}"
-  scalable_dimension = "ecs:service:DesiredCount"
-  min_capacity = var.desired_service_count
-  max_capacity = var.desired_service_count
-
-  depends_on = [
-    aws_ecs_service.cxflow,
-  ]
-}
-
-resource "aws_appautoscaling_policy" "up" {
-  name = "${var.name}-${var.environment}-up"
-  service_namespace = "ecs"
-  resource_id = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.cxflow.name}"
-  scalable_dimension = "ecs:service:DesiredCount"
-
-  step_scaling_policy_configuration {
-    adjustment_type = "ChangeInCapacity"
-    cooldown = "300"
-    metric_aggregation_type = "Average"
-
-    step_adjustment {
-      metric_interval_lower_bound = 0
-      scaling_adjustment = 1
-    }
-  }
-
-  depends_on = [
-    aws_appautoscaling_target.cxflow,
-  ]
-}
-
-resource "aws_appautoscaling_policy" "down" {
-  name = "${var.name}-${var.environment}-down"
-  service_namespace = "ecs"
-  resource_id = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.cxflow.name}"
-  scalable_dimension = "ecs:service:DesiredCount"
-
-  step_scaling_policy_configuration {
-    adjustment_type = "ChangeInCapacity"
-    cooldown = "300"
-    metric_aggregation_type = "Average"
-
-    step_adjustment {
-      metric_interval_upper_bound = 0
-      scaling_adjustment = -1
-    }
-  }
-
-  depends_on = [
-    aws_appautoscaling_target.cxflow,
-  ]
 }
