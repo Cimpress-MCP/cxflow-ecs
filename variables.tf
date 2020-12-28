@@ -56,13 +56,13 @@ variable "public_subnets" {
 
 variable "enable_dns_support" {
   type = bool
-  default = false
+  default = true
   description = "Set to true to enable DNS support in the VPC"
 }
 
 variable "enable_dns_hostnames" {
   type = bool
-  default = false
+  default = true
   description = "Set to true to enable DNS hostnames in the VPC"
 }
 
