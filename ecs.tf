@@ -48,6 +48,12 @@ resource "aws_ecs_service" "cxflow" {
     assign_public_ip = true
   }
 
+  load_balancer {
+    target_group_arn = aws_lb_target_group.cxflow.arn
+    container_name = "cxflow-${var.environment}"
+    container_port = 8080
+  }
+
   tags = merge(local.all_tags, {
     "Name" = "cxflow-${var.environment}"
   })
