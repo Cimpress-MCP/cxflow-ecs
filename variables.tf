@@ -3,11 +3,6 @@ variable "region" {
   description = "The region to deploy the cluster into"
 }
 
-variable "name" {
-  type = string
-  description = "A name to apply to all resources"
-}
-
 variable "dns_zone" {
   type = string
   description = "The name of the Route 53 DNS zone to use for the domain name"
@@ -16,6 +11,12 @@ variable "dns_zone" {
 variable "domain" {
   type = string
   description = "The domain to host the cluster on"
+}
+
+variable "name" {
+  type = string
+  description = "A name for this cluster.  The actual name assigned to resources will be {var.name}-{var.evnironment}"
+  default = "cxflow"
 }
 
 variable "desired_service_count" {

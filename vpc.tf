@@ -5,7 +5,7 @@ data "aws_caller_identity" "current" {}
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = var.name
+  name = "${var.name}-${var.environment}"
   cidr = var.cidr_block
   azs = data.aws_availability_zones.available.names
   private_subnets = var.private_subnets
@@ -14,6 +14,6 @@ module "vpc" {
   enable_dns_hostnames = true
 
   tags = merge(local.all_tags, {
-    "Name" = var.name
+    "Name" = "${var.name}-${var.environment}"
   })
 }

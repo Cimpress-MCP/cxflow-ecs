@@ -11,7 +11,7 @@
 # really only plays nicely with the SSM parameter store, so this is the best solution for us at the moment.
 
 resource "aws_ssm_parameter" "checkmarx_password" {
-  name = "/cxflow/${var.environment}/checkmarx/password"
+  name = "/${var.name}/${var.environment}/checkmarx/password"
   description = "The password that CxFlow will use to login to Checkmarx"
   type = "SecureString"
   value = "Filler"
@@ -23,7 +23,7 @@ resource "aws_ssm_parameter" "checkmarx_password" {
 }
 
 resource "aws_ssm_parameter" "checkmarx_username" {
-  name = "/cxflow/${var.environment}/checkmarx/username"
+  name = "/${var.name}/${var.environment}/checkmarx/username"
   description = "The username that CxFlow will use to login to Checkmarx"
   type = "SecureString"
   value = "Filler"
@@ -35,7 +35,7 @@ resource "aws_ssm_parameter" "checkmarx_username" {
 }
 
 resource "aws_ssm_parameter" "checkmarx_token" {
-  name = "/cxflow/${var.environment}/checkmarx/token"
+  name = "/${var.name}/${var.environment}/checkmarx/token"
   description = "This token is associated with the default endpoint for driving a scan/results but that is not also associated with a webhook event payload (which is a separate token)"
   type = "SecureString"
   value = "Filler"
@@ -47,7 +47,7 @@ resource "aws_ssm_parameter" "checkmarx_token" {
 }
 
 resource "aws_ssm_parameter" "checkmarx_url" {
-  name = "/cxflow/${var.environment}/checkmarx/url"
+  name = "/${var.name}/${var.environment}/checkmarx/url"
   description = "The URL of the checkmarx server"
   type = "String"
   value = "Filler"
@@ -59,7 +59,7 @@ resource "aws_ssm_parameter" "checkmarx_url" {
 }
 
 resource "aws_ssm_parameter" "gitlab_token" {
-  name = "/cxflow/${var.environment}/gitlab/token"
+  name = "/${var.name}/${var.environment}/gitlab/token"
   description = "The token used by CxFlow to log back into Gitlab and push out changes"
   type = "SecureString"
   value = "Filler"
@@ -71,7 +71,7 @@ resource "aws_ssm_parameter" "gitlab_token" {
 }
 
 resource "aws_ssm_parameter" "gitlab_webhook_token" {
-  name = "/cxflow/${var.environment}/gitlab/webhook-token"
+  name = "/${var.name}/${var.environment}/gitlab/webhook-token"
   description = "Preshared secret between GitLab and CxFlow - used when registering the webhook for auth"
   type = "SecureString"
   value = "Filler"

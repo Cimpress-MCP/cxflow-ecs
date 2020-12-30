@@ -8,40 +8,40 @@
       }
     ],
     "essential": true,
-    "name": "cxflow-${environment}",
-    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/cxflow-${environment}:latest",
+    "name": "${name}-${environment}",
+    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${name}-${environment}:latest",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/app/cxflow-${environment}",
+        "awslogs-group": "/app/${name}-${environment}",
         "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "cxflow-"
+        "awslogs-stream-prefix": "${name}-"
       }
     },
     "secrets": [
       {
         "name": "CHECKMARX_USERNAME",
-        "valueFrom": "/cxflow/${environment}/checkmarx/username"
+        "valueFrom": "/${name}/${environment}/checkmarx/username"
       },
       {
         "name": "CHECKMARX_PASSWORD",
-        "valueFrom": "/cxflow/${environment}/checkmarx/password"
+        "valueFrom": "/${name}/${environment}/checkmarx/password"
       },
       {
         "name": "CHECKMARX_BASE_URL",
-        "valueFrom": "/cxflow/${environment}/checkmarx/url"
+        "valueFrom": "/${name}/${environment}/checkmarx/url"
       },
       {
         "name": "CX_FLOW_TOKEN",
-        "valueFrom": "/cxflow/${environment}/checkmarx/token"
+        "valueFrom": "/${name}/${environment}/checkmarx/token"
       },
       {
         "name": "GITLAB_TOKEN",
-        "valueFrom": "/cxflow/${environment}/gitlab/token"
+        "valueFrom": "/${name}/${environment}/gitlab/token"
       },
       {
         "name": "GITLAB_WEBHOOK_TOKEN",
-        "valueFrom": "/cxflow/${environment}/gitlab/webhook-token"
+        "valueFrom": "/${name}/${environment}/gitlab/webhook-token"
       }
     ]
   }

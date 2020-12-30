@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "cluster" {
-  name = "cxflow-${var.environment}"
+  name = "${var.name}-${var.environment}"
 
   setting {
     name = "containerInsights"
@@ -23,7 +23,7 @@ data "template_file" "container_definitions" {
 }
 
 resource "aws_ecs_task_definition" "cxflow" {
-  family = "cxflow-${var.environment}"
+  family = "${var.name}-${var.environment}"
   container_definitions = data.template_file.container_definitions.rendered
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn = aws_iam_role.ecs_task_execution_role.arn
@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "cxflow" {
 }
 
 resource "aws_ecs_service" "cxflow" {
-  name = "cxflow-${var.environment}"
+  name = "${var.name}-${var.environment}"
   cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.cxflow.arn
   desired_count = var.desired_service_count
@@ -50,11 +50,11 @@ resource "aws_ecs_service" "cxflow" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.cxflow.arn
-    container_name = "cxflow-${var.environment}"
+    container_name = "${var.name}-${var.environment}"
     container_port = 8080
   }
 
   tags = merge(local.all_tags, {
-    "Name" = "cxflow-${var.environment}"
+    "Name" = "${var.name}-${var.environment}"
   })
 }

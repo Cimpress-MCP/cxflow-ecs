@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "ecs_task_execution_role" {
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecs-execution-role-${var.name}"
+  name = "${var.name}-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_execution_role.json
   tags = local.all_tags
 }
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "ecs_task_policies" {
 }
 
 resource "aws_iam_role_policy" "ecs_task_policies" {
-  name = "${var.name}-ecs-task"
+  name = "logging-ecr-ssm"
   role = aws_iam_role.ecs_task_execution_role.id
   policy = data.aws_iam_policy_document.ecs_task_policies.json
 }

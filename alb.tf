@@ -1,7 +1,7 @@
 locals {
   # sigh, this is unfortunate.  The ELB name is limited to 32 characters, so we have to lose some info.
   # This is me chopping off part of the name while trying to keep it useful
-  short_name = substr(var.name, 0, 32)
+  short_name = substr("${var.name}-${var.environment}", 0, 32)
 }
 
 data "aws_route53_zone" "default" {
@@ -37,7 +37,7 @@ resource "aws_lb_listener" "cxflow" {
 }
 
 resource "aws_lb_target_group" "cxflow" {
-  name = var.name
+  name = "${var.name}-${var.environment}"
   port = 443
   protocol = "HTTP"
   vpc_id = module.vpc.vpc_id
