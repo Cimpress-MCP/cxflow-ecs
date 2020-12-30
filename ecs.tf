@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "cluster" {
   }
 
   tags = merge(local.all_tags, {
-    "Name" = var.name
+    "Name" = "${var.name}-${var.environment}"
   })
 }
 
@@ -16,6 +16,7 @@ data "template_file" "container_definitions" {
   template = file("${path.module}/ecs-container-definitions.json")
 
   vars = {
+    name = var.name
     environment = var.environment
     account_id = data.aws_caller_identity.current.account_id
     region = var.region
