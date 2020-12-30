@@ -45,10 +45,10 @@ resource "aws_lb_target_group" "cxflow" {
 
   health_check {
     healthy_threshold = "3"
-    interval = "90"
+    interval = "300"
     protocol = "HTTP"
     matcher = "200-299"
-    timeout = "20"
+    timeout = "300"
     path = "/"
     unhealthy_threshold = "2"
   }
