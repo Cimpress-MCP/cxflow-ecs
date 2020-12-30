@@ -48,7 +48,7 @@ resource "aws_lb_target_group" "cxflow" {
     interval = "300"
     protocol = "HTTP"
     matcher = "200-299"
-    timeout = "300"
+    timeout = "20"
     path = "/"
     unhealthy_threshold = "2"
   }
