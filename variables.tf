@@ -25,12 +25,6 @@ variable "desired_service_count" {
   default = "1"
 }
 
-variable "squad" {
-  type = string
-  default = ""
-  description = "Squad, which could be your squad name or abbreviation, e.g. 'krypton' or 'kyp'"
-}
-
 variable "environment" {
   type = string
   default = "development"
