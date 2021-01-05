@@ -13,6 +13,11 @@ variable "domain" {
   description = "The domain to host the cluster on"
 }
 
+variable "devdomain" {
+  type        = string
+  description = "The dev domain used for development"
+}
+
 variable "name" {
   type = string
   description = "A name for this cluster.  The actual name assigned to resources will be {var.name}-{var.evnironment}"

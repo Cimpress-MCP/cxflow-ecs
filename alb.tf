@@ -36,8 +36,42 @@ resource "aws_lb_listener" "cxflow" {
   }
 }
 
+resource "aws_lb_listener_rule" "cxflow-dev" {
+  listener_arn = aws_lb_listener.front_end.arn
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.cxflow-dev.arn
+  }
+
+  condition {
+    host_header {
+      values = ["var.devdomain"]
+    }
+  }
+}
+
 resource "aws_lb_target_group" "cxflow" {
   name = "${var.name}-${var.environment}"
+  port = 443
+  protocol = "HTTP"
+  vpc_id = module.vpc.vpc_id
+  target_type = "ip"
+
+  health_check {
+    healthy_threshold = "3"
+    interval = "120"
+    protocol = "HTTP"
+    matcher = "200-299"
+    timeout = "20"
+    path = "/actuator/health"
+    unhealthy_threshold = "2"
+  }
+}
+
+resource "aws_lb_target_group" "cxflow-dev" {
+  name = "${var.name}-${var.environment}-dev"
   port = 443
   protocol = "HTTP"
   vpc_id = module.vpc.vpc_id
@@ -57,6 +91,18 @@ resource "aws_lb_target_group" "cxflow" {
 resource "aws_route53_record" "vault_elb" {
   zone_id = data.aws_route53_zone.default.zone_id
   name = var.domain
+  type = "A"
+
+  alias {
+    name = aws_lb.cxflow.dns_name
+    zone_id = aws_lb.cxflow.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "devdomain_elb" {
+  zone_id = data.aws_route53_zone.default.zone_id
+  name = var.devdomain
   type = "A"
 
   alias {

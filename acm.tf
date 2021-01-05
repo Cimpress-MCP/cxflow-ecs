@@ -1,6 +1,11 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name = var.domain
-  validation_method = "DNS"
+  domain_name               = var.domain
+  subject_alternative_names = var.devdomain
+  validation_method         = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 data "aws_route53_zone" "myzone" {
@@ -13,10 +18,10 @@ resource "aws_route53_record" "route53_record" {
   ]
 
   allow_overwrite = true
-  name = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_name
-  records = [tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_value]
+  name = tolist(aws_acm_certificate.cert.domain_validation_options)[count.index].resource_record_name
+  records = [tolist(aws_acm_certificate.cert.domain_validation_options)[count.index].resource_record_value]
   ttl = 60
-  type = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
+  type = tolist(aws_acm_certificate.cert.domain_validation_options)[count.index].resource_record_type
   zone_id = data.aws_route53_zone.myzone.zone_id
 }
 
