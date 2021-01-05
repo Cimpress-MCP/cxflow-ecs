@@ -37,7 +37,7 @@ resource "aws_lb_listener" "cxflow" {
 }
 
 resource "aws_lb_listener_rule" "cxflow-dev" {
-  listener_arn = aws_lb_listener.front_end.arn
+  listener_arn = aws_lb_listener.cxflow.arn
   priority     = 100
 
   action {
