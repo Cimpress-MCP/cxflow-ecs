@@ -4,8 +4,16 @@ resource "aws_acm_certificate" "cert" {
   subject_alternative_names = [var.devdomain]
   validation_method         = "DNS"
 
+  tags = {
+    Name        = "var.domain"
+    Environment = "var.environment"
+    Squad       = "var.squad"
+    Terraform   = "true"
+  }
+
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [tags]
   }
 }
 
