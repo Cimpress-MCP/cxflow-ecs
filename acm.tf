@@ -17,18 +17,19 @@ resource "aws_route53_record" "route53_record" {
   depends_on      = [aws_acm_certificate.cert]
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-      type   = "A"
+      name    = dvo.resource_record_name
+      record  = dvo.resource_record_value
+      type    = dvo.resource_record_type
+      zone_id = dvo.domain_name == "var.dns_zone" ? data.aws_route53_zone.myzone.zone_id : data.aws_route53_zone.myzone.zone_id
     }
   }
+
   allow_overwrite = true
   name            = each.value.name
-  records         = each.value.record
+  records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.myzone.zone_id
+  zone_id         = each.value.zone_id
 
 }
 
