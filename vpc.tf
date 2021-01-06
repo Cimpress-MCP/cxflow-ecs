@@ -25,7 +25,7 @@ module "vpc" {
 }
 
 resource "aws_flow_log" "aws_flowlogs" {
-  log_destination      = "${data.aws_s3_bucket.cimpress-security-flowlogs.arn}/${module.vpc.vpc_id}"
+  log_destination      = "${data.aws_s3_bucket.cimpress-security-flowlogs.arn}/${module.vpc.vpc_id}/"
   log_destination_type = "s3"
   traffic_type         = "ALL"
   vpc_id               = module.vpc.vpc_id
