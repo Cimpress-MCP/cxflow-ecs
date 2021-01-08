@@ -9,13 +9,13 @@
     ],
     "essential": true,
     "name": "${name}-${environment}",
-    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${name}-${environment}:stable",
+    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${name}-${environment}:latest",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
         "awslogs-group": "/app/${name}-${environment}",
         "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "${name}-"
+        "awslogs-stream-prefix": "${name}-dev-"
       }
     },
     "secrets": [

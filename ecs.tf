@@ -23,6 +23,15 @@ data "template_file" "container_definitions" {
   }
 }
 
+
+resource "aws_cloudwatch_log_group" "cxflow" {
+  name = "/app/${name}-${environment}"
+
+  tags = merge(local.all_tags, {
+    "Name" = "${var.name}-${var.environment}"
+  })
+}
+
 resource "aws_ecs_task_definition" "cxflow" {
   family                   = "${var.name}-${var.environment}"
   container_definitions    = data.template_file.container_definitions.rendered
