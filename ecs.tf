@@ -36,59 +36,20 @@ resource "aws_ecs_task_definition" "cxflow" {
   tags = local.all_tags
 }
 
+
 resource "aws_ecs_task_definition" "cxflow-dev" {
-  family                = "${var.name}-${var.environment}-dev"
-  container_definitions = <<TASK_DEFINITION
-[
-  {
-    "portMappings": [
-      {
-        "hostPort": 8080,
-        "containerPort": 8080,
-        "protocol": "http"
-      }
-    ],
-    "essential": true,
-    "name": "${name}-${environment}-dev",
-    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${name}-${environment}:latest",
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-group": "/app/${name}-${environment}",
-        "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "${name}-dev"
-      }
-    },
-    "secrets": [
-      {
-        "name": "CHECKMARX_USERNAME",
-        "valueFrom": "/${name}/${environment}/checkmarx/username"
-      },
-      {
-        "name": "CHECKMARX_PASSWORD",
-        "valueFrom": "/${name}/${environment}/checkmarx/password"
-      },
-      {
-        "name": "CHECKMARX_BASE_URL",
-        "valueFrom": "/${name}/${environment}/checkmarx/url"
-      },
-      {
-        "name": "CX_FLOW_TOKEN",
-        "valueFrom": "/${name}/${environment}/checkmarx/token"
-      },
-      {
-        "name": "GITLAB_TOKEN",
-        "valueFrom": "/${name}/${environment}/gitlab/token"
-      },
-      {
-        "name": "GITLAB_WEBHOOK_TOKEN",
-        "valueFrom": "/${name}/${environment}/gitlab/webhook-token"
-      }
-    ]
-  }
-]
-TASK_DEFINITION
+  family                   = "${var.name}-${var.environment}-dev"
+  container_definitions    = data.template_file.container_definitions.rendered
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
+  network_mode             = "awsvpc"
+  memory                   = "2048"
+  cpu                      = "512"
+  requires_compatibilities = ["FARGATE"]
+
+  tags = local.all_tags
 }
+
 
 resource "aws_ecs_service" "cxflow" {
   name            = "${var.name}-${var.environment}"
