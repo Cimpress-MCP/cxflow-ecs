@@ -25,7 +25,8 @@ data "template_file" "container_definitions" {
 
 
 resource "aws_cloudwatch_log_group" "cxflow" {
-  name = "/app/${var.name}-${var.environment}"
+  name              = "/app/${var.name}-${var.environment}"
+  retention_in_days = "30"
 
   tags = merge(local.all_tags, {
     "Name" = "${var.name}-${var.environment}"
