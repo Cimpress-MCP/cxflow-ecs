@@ -99,7 +99,7 @@ resource "aws_ecs_service" "cxflow-dev" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.cxflow-dev.arn
-    container_name   = "${var.name}-${var.environment}-dev"
+    container_name   = "${var.name}-${var.environment}"
     container_port   = 8080
   }
 
