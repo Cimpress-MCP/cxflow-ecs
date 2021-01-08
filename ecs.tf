@@ -23,6 +23,16 @@ data "template_file" "container_definitions" {
   }
 }
 
+data "template_file" "container_definitions_dev" {
+  template = file("${path.module}/ecs-container-definitions-dev.json")
+
+  vars = {
+    name = var.name
+    environment = var.environment
+    account_id = data.aws_caller_identity.current.account_id
+    region = var.region
+  }
+}
 
 resource "aws_cloudwatch_log_group" "cxflow" {
   name              = "/app/${var.name}-${var.environment}"
@@ -49,7 +59,7 @@ resource "aws_ecs_task_definition" "cxflow" {
 
 resource "aws_ecs_task_definition" "cxflow-dev" {
   family                   = "${var.name}-${var.environment}-dev"
-  container_definitions    = data.template_file.container_definitions.rendered
+  container_definitions    = data.template_file.container_definitions_dev.rendered
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_execution_role.arn
   network_mode             = "awsvpc"
