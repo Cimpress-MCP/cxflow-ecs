@@ -47,7 +47,7 @@ resource "aws_lb_listener_rule" "cxflow-dev" {
 
   condition {
     host_header {
-      values = "var.devdomain"
+      values = var.devdomain
     }
   }
 }
