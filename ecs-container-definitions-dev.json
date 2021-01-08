@@ -15,7 +15,7 @@
       "options": {
         "awslogs-group": "/app/${name}-${environment}",
         "awslogs-region": "${region}",
-        "awslogs-stream-prefix": "${name}-dev-"
+        "awslogs-stream-prefix": "${name}-dev"
       }
     },
     "secrets": [
