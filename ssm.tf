@@ -11,11 +11,12 @@
 # really only plays nicely with the SSM parameter store, so this is the best solution for us at the moment.
 
 resource "aws_ssm_parameter" "checkmarx_password" {
-  name = "/${var.name}/${var.environment}/checkmarx/password"
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/password"
   description = "The password that CxFlow will use to login to Checkmarx"
-  type = "SecureString"
-  value = "Filler"
-  tags = local.all_tags
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = local.all_tags
 
   lifecycle {
     ignore_changes = [value]
@@ -23,11 +24,12 @@ resource "aws_ssm_parameter" "checkmarx_password" {
 }
 
 resource "aws_ssm_parameter" "checkmarx_username" {
-  name = "/${var.name}/${var.environment}/checkmarx/username"
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/username"
   description = "The username that CxFlow will use to login to Checkmarx"
-  type = "SecureString"
-  value = "Filler"
-  tags = local.all_tags
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = local.all_tags
 
   lifecycle {
     ignore_changes = [value]
@@ -35,11 +37,12 @@ resource "aws_ssm_parameter" "checkmarx_username" {
 }
 
 resource "aws_ssm_parameter" "checkmarx_token" {
-  name = "/${var.name}/${var.environment}/checkmarx/token"
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/token"
   description = "This token is associated with the default endpoint for driving a scan/results but that is not also associated with a webhook event payload (which is a separate token)"
-  type = "SecureString"
-  value = "Filler"
-  tags = local.all_tags
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = local.all_tags
 
   lifecycle {
     ignore_changes = [value]
@@ -47,11 +50,12 @@ resource "aws_ssm_parameter" "checkmarx_token" {
 }
 
 resource "aws_ssm_parameter" "checkmarx_url" {
-  name = "/${var.name}/${var.environment}/checkmarx/url"
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/url"
   description = "The URL of the checkmarx server"
-  type = "String"
-  value = "Filler"
-  tags = local.all_tags
+  type        = "String"
+  value       = "Filler"
+  tags        = local.all_tags
 
   lifecycle {
     ignore_changes = [value]
@@ -59,11 +63,12 @@ resource "aws_ssm_parameter" "checkmarx_url" {
 }
 
 resource "aws_ssm_parameter" "gitlab_token" {
-  name = "/${var.name}/${var.environment}/gitlab/token"
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/gitlab/token"
   description = "The token used by CxFlow to log back into Gitlab and push out changes"
-  type = "SecureString"
-  value = "Filler"
-  tags = local.all_tags
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = local.all_tags
 
   lifecycle {
     ignore_changes = [value]
@@ -71,11 +76,12 @@ resource "aws_ssm_parameter" "gitlab_token" {
 }
 
 resource "aws_ssm_parameter" "gitlab_webhook_token" {
-  name = "/${var.name}/${var.environment}/gitlab/webhook-token"
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/gitlab/webhook-token"
   description = "Preshared secret between GitLab and CxFlow - used when registering the webhook for auth"
-  type = "SecureString"
-  value = "Filler"
-  tags = var.tags
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = var.tags
 
   lifecycle {
     ignore_changes = [value]

@@ -1,60 +1,30 @@
 resource "aws_ecs_cluster" "cluster" {
-  name = "${var.name}-${var.environment}"
+  name = var.name
 
   setting {
-    name = "containerInsights"
+    name  = "containerInsights"
     value = var.container_insights
   }
 
   tags = merge(local.all_tags, {
-    "Name" = "${var.name}-${var.environment}"
+    "Name" = var.name
   })
 }
 
+module "cxflow_service" {
+  for_each    = var.environments
+  source = "./modules/ecs_service"
 
-data "template_file" "container_definitions" {
-  template = file("${path.module}/ecs-container-definitions.json")
-
-  vars = {
-    name = var.name
-    environment = var.environment
-    account_id = data.aws_caller_identity.current.account_id
-    region = var.region
-  }
-}
-
-resource "aws_ecs_task_definition" "cxflow" {
-  family = "${var.name}-${var.environment}"
-  container_definitions = data.template_file.container_definitions.rendered
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  task_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  network_mode = "awsvpc"
-  memory = "2048"
-  cpu = "512"
-  requires_compatibilities = ["FARGATE"]
-
+  name = var.name
+  environment = each.key
+  container_tag = each.value
+  vpc_id = module.vpc.vpc_id
+  alb_security_group_id = aws_security_group.alb.id
+  region = var.region
+  ecs_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  ecs_cluster_id = aws_ecs_cluster.cluster.id
+  desired_service_count = var.desired_service_count
+  private_subnet_ids = module.vpc.private_subnets
+  lb_listener_arn = aws_lb_listener.cxflow.arn
   tags = local.all_tags
-}
-
-resource "aws_ecs_service" "cxflow" {
-  name = "${var.name}-${var.environment}"
-  cluster = aws_ecs_cluster.cluster.id
-  task_definition = aws_ecs_task_definition.cxflow.arn
-  desired_count = var.desired_service_count
-  launch_type = "FARGATE"
-
-  network_configuration {
-    subnets = module.vpc.private_subnets
-    security_groups = [aws_security_group.ecs_tasks.id]
-  }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.cxflow.arn
-    container_name = "${var.name}-${var.environment}"
-    container_port = 8080
-  }
-
-  tags = merge(local.all_tags, {
-    "Name" = "${var.name}-${var.environment}"
-  })
 }
