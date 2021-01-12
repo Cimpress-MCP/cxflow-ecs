@@ -27,12 +27,12 @@ resource "aws_lb_listener" "cxflow" {
   certificate_arn   = aws_acm_certificate_validation.cert_validation.certificate_arn
 
   default_action {
-    type             = "fixed-response"
+    type = "fixed-response"
 
     fixed_response {
-      content_type     = "text/plain"
-      message_body     = "Missing environment in path"
-      status_code      = 404
+      content_type = "text/plain"
+      message_body = "Missing environment in path"
+      status_code  = 404
     }
   }
 }

@@ -27,7 +27,7 @@ variable "desired_service_count" {
 
 variable "environments" {
   type        = map
-  default     = {"production": "stable"}
+  default     = { "production" : "stable" }
   description = "Environments to build services for.  Should be a map with the environment name as the key and the container tag reference as the value"
 }
 
@@ -50,8 +50,8 @@ variable "public_subnets" {
 }
 
 variable "flow_log_bucket" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "An S3 bucket to send VPC flow logs to"
 }
 
