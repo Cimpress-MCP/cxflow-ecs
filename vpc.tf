@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {}
 data "aws_caller_identity" "current" {}
 
 data "aws_s3_bucket" "cimpress-security-flowlogs" {
-  bucket = "cimpress-security-flowlogs-${data.aws_caller_identity.current.account_id}"
+  bucket = var.flow_log_bucket != "" ? var.flow_log_bucket : "cimpress-security-flowlogs-${data.aws_caller_identity.current.account_id}"
 }
 
 module "vpc" {

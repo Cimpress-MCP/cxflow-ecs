@@ -28,9 +28,12 @@ resource "aws_lb_listener" "cxflow" {
 
   default_action {
     type             = "fixed-response"
-    content_type     = "text/plain"
-    message_body     = "Missing environment in path"
-    status_code      = 404
+
+    fixed_response {
+      content_type     = "text/plain"
+      message_body     = "Missing environment in path"
+      status_code      = 404
+    }
   }
 }
 

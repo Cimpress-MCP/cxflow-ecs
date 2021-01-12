@@ -49,6 +49,12 @@ variable "public_subnets" {
   description = "A list of CIDR blocks to use for the public subnets"
 }
 
+variable "flow_log_bucket" {
+  type = string
+  default = ""
+  description = "An S3 bucket to send VPC flow logs to"
+}
+
 variable "container_insights" {
   type    = string
   default = "enabled"

@@ -27,4 +27,6 @@ module "cxflow_service" {
   private_subnet_ids = module.vpc.private_subnets
   lb_listener_arn = aws_lb_listener.cxflow.arn
   tags = local.all_tags
+
+  depends_on = [aws_lb.cxflow]
 }

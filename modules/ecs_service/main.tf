@@ -67,6 +67,7 @@ data "template_file" "container_definitions" {
     environment = var.environment
     account_id  = data.aws_caller_identity.current.account_id
     region      = var.region
+    container_tag = var.container_tag
   }
 }
 
@@ -100,6 +101,15 @@ resource "aws_ecs_service" "cxflow" {
     container_name   = "${var.name}-${var.environment}"
     container_port   = 8080
   }
+
+  tags = merge(var.tags, {
+    "Name" = "${var.name}-${var.environment}"
+  })
+}
+
+resource "aws_cloudwatch_log_group" "cxflow" {
+  name = "/app/${var.name}-${var.environment}"
+  retention_in_days = "30"
 
   tags = merge(var.tags, {
     "Name" = "${var.name}-${var.environment}"
