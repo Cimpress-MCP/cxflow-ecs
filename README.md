@@ -48,7 +48,7 @@ This module accepts the following inputs:
 | dns_zone              | Yes      |                                                   | The name of the Route53 DNS zone to use for the domain/ACM                                 |
 | domain                | Yes      |                                                   | The domain to make the cluster available on                                                |
 | name                  | No       | cxflow                                            | The "name" of the cluster - will be used in the name for all AWS resources                 |
-| environment           | No       | development                                       | The environment - will be attached as a tag and included in the name for all AWS resources |
+| environments          | No       | {"production": "stable"}                          | List of services to launch: key is environment name, value is tag for image in ECR         |
 | desired_service_count | No       | 1                                                 | The desired number of instances to use for the service                                     |
 | cidr_block            | No       | 10.0.0.0/16                                       | The CIDR block to use for the VPC                                                          |
 | private_subnets       | No       | "10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"       | A list of CIDR blocks to use for the private subnets in the VPC                            |
