@@ -9,7 +9,7 @@
     ],
     "essential": true,
     "name": "${name}-${environment}",
-    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${name}-${environment}:latest",
+    "image": "${account_id}.dkr.ecr.${region}.amazonaws.com/${name}:${container_tag}",
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {

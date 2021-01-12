@@ -30,6 +30,7 @@ This repository requires the following external items in order to actually do an
 - The SSM parameters must be populated with the [necessary values](#SSM-Parameters)
 - A Route53 hosted zone
 - A running checkmarx server
+- An S3 bucket for VPC flow logs (named `cimpress-security-flowlogs-[AWS_ACCOUNT_ID]`)
 
 ## Architecture
 
