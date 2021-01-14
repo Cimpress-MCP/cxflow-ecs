@@ -38,25 +38,25 @@ variable "cidr_block" {
 }
 
 variable "enable_dns_support" {
-  type        = boolean
+  type        = bool
   default     = true
   description = "A boolean flag to enable/disable DNS support in the VPC."
 }
 
 variable "enable_dns_hostnames" {
-  type        = boolean
+  type        = bool
   default     = true
   description = "A boolean flag to enable/disable DNS hostnames in the VPC."
 }
 
 variable "enable_nat_gateway" {
-  type        = boolean
+  type        = bool
   default     = true
   description = "Provides a resource to create a VPC NAT Gateway."
 }
 
 variable "single_nat_gateway" {
-  type        = boolean
+  type        = bool
   default     = true
   description = "All private subnets will route their Internet traffic through this single NAT gateway. The NAT gateway will be placed in the first public subnet in your public_subnets block."
 }
@@ -97,7 +97,7 @@ variable "ecr_image_tag_mutability" {
 }
 
 variable "ecr_scan_on_push" {
-  type        = boolean
+  type        = bool
   default     = true
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
 }
