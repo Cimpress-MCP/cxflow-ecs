@@ -37,6 +37,30 @@ variable "cidr_block" {
   description = "The CIDR block to apply to the full VPC"
 }
 
+variable "enable_dns_support" {
+  type        = boolean
+  default     = true
+  description = "A boolean flag to enable/disable DNS support in the VPC."
+}
+
+variable "enable_dns_hostnames" {
+  type        = boolean
+  default     = true
+  description = "A boolean flag to enable/disable DNS hostnames in the VPC."
+}
+
+variable "enable_nat_gateway" {
+  type        = boolean
+  default     = true
+  description = "Provides a resource to create a VPC NAT Gateway."
+}
+
+variable "single_nat_gateway" {
+  type        = boolean
+  default     = true
+  description = "All private subnets will route their Internet traffic through this single NAT gateway. The NAT gateway will be placed in the first public subnet in your public_subnets block."
+}
+
 variable "private_subnets" {
   type        = list(string)
   default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
@@ -64,4 +88,22 @@ variable "tags" {
   type        = map
   default     = {}
   description = "Additional tags to apply to all resources"
+}
+
+variable "ecr_image_tag_mutability" {
+  type        = string
+  default     = "IMMUTABLE"
+  description = "The tag mutability setting for the repository."
+}
+
+variable "ecr_scan_on_push" {
+  type        = boolean
+  default     = true
+  description = "Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)."
+}
+
+variable "ecr_encryption_type" {
+  type        = string
+  default     = "AES256"
+  description = "The encryption type to use for the repository. Valid values are AES256 or KMS. Defaults to AES256."
 }

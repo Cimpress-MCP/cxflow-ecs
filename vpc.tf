@@ -14,10 +14,10 @@ module "vpc" {
   azs                  = data.aws_availability_zones.available.names
   private_subnets      = var.private_subnets
   public_subnets       = var.public_subnets
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-  enable_nat_gateway   = true
-  single_nat_gateway   = true
+  enable_dns_support   = var.enable_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_nat_gateway   = var.enable_nat_gateway
+  single_nat_gateway   = var.single_nat_gateway
 
   tags = merge(local.all_tags, {
     "Name" = var.name
