@@ -3,7 +3,7 @@ data "aws_route53_zone" "myzone" {
 }
 
 resource "aws_acm_certificate" "cert" {
-  domain_name               = var.domain_name
+  domain_name               = var.domain
   subject_alternative_names = [for environment in keys(var.environments) : "${environment}.${var.domain}"]
   validation_method         = "DNS"
   tags                      = local.all_tags

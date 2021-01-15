@@ -52,7 +52,7 @@ resource "aws_route53_record" "cxflow" {
 resource "aws_route53_record" "environment_domains" {
   for_each = var.environments
 
-  zone_id = aws_route53_zone.default.zone_id
+  zone_id = data.aws_route53_zone.default.zone_id
   name    = "${each.key}.${var.domain}"
   type    = "A"
 
