@@ -37,17 +37,17 @@ resource "aws_lb_listener" "cxflow" {
   }
 }
 
-resource "aws_route53_record" "cxflow" {
-  zone_id = data.aws_route53_zone.default.zone_id
-  name    = var.domain
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.cxflow.dns_name
-    zone_id                = aws_lb.cxflow.zone_id
-    evaluate_target_health = true
-  }
-}
+# resource "aws_route53_record" "cxflow" {
+#   zone_id = data.aws_route53_zone.default.zone_id
+#   name    = var.domain
+#   type    = "A"
+#
+#   alias {
+#     name                   = aws_lb.cxflow.dns_name
+#     zone_id                = aws_lb.cxflow.zone_id
+#     evaluate_target_health = true
+#   }
+# }
 
 resource "aws_route53_record" "environment_domains" {
   for_each = var.environments
