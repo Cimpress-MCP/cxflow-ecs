@@ -17,6 +17,7 @@ module "cxflow_service" {
 
   name                  = var.name
   environment           = each.key
+  domain                = "${each.key}.${var.domain}"
   container_tag         = each.value
   vpc_id                = module.vpc.vpc_id
   alb_security_group_id = aws_security_group.alb.id

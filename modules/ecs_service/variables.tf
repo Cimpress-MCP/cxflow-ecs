@@ -8,6 +8,11 @@ variable "name" {
   description = "A name for this service."
 }
 
+variable "domain" {
+  type        = string
+  description = "The domain that this service should listen on"
+}
+
 variable "desired_service_count" {
   type        = number
   description = "The desired number of instances in the ECS service"
