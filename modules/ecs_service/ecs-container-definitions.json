@@ -32,6 +32,18 @@
         "valueFrom": "/${name}/${environment}/checkmarx/url"
       },
       {
+        "name": "SCA_USERNAME",
+        "valueFrom": "/${name}/${environment}/checkmarx/sca_username"
+      },
+      {
+        "name": "SCA_PASSWORD",
+        "valueFrom": "/${name}/${environment}/checkmarx/sca_password"
+      },
+      {
+        "name": "SCA_TENANT",
+        "valueFrom": "/${name}/${environment}/checkmarx/sca_tenant"
+      },
+      {
         "name": "CX_FLOW_TOKEN",
         "valueFrom": "/${name}/${environment}/checkmarx/token"
       },
