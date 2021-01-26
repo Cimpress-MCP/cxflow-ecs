@@ -62,6 +62,45 @@ resource "aws_ssm_parameter" "checkmarx_url" {
   }
 }
 
+resource "aws_ssm_parameter" "sca_username" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/sca_username"
+  description = "The username that CxFlow will use to login to api.scacheckmarx.com"
+  type        = "String"
+  value       = "Filler"
+  tags        = local.all_tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
+resource "aws_ssm_parameter" "sca_password" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/sca_password"
+  description = "The password that CxFlow will use to login to api.scacheckmarx.com"
+  type        = "String"
+  value       = "Filler"
+  tags        = local.all_tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
+resource "aws_ssm_parameter" "sca_tenant" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/checkmarx/sca_tenant"
+  description = "The tenant that CxFlow will use to login to api.scacheckmarx.com"
+  type        = "String"
+  value       = "Filler"
+  tags        = local.all_tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
 resource "aws_ssm_parameter" "gitlab_token" {
   for_each    = var.environments
   name        = "/${var.name}/${each.key}/gitlab/token"
