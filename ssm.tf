@@ -66,7 +66,7 @@ resource "aws_ssm_parameter" "sca_username" {
   for_each    = var.environments
   name        = "/${var.name}/${each.key}/checkmarx/sca_username"
   description = "The username that CxFlow will use to login to api.scacheckmarx.com"
-  type        = "String"
+  type        = "SecureString"
   value       = "Filler"
   tags        = local.all_tags
 
@@ -79,7 +79,7 @@ resource "aws_ssm_parameter" "sca_password" {
   for_each    = var.environments
   name        = "/${var.name}/${each.key}/checkmarx/sca_password"
   description = "The password that CxFlow will use to login to api.scacheckmarx.com"
-  type        = "String"
+  type        = "SecureString"
   value       = "Filler"
   tags        = local.all_tags
 
