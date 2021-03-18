@@ -107,3 +107,9 @@ variable "ecr_encryption_type" {
   default     = "AES256"
   description = "The encryption type to use for the repository. Valid values are AES256 or KMS. Defaults to AES256."
 }
+
+variable "gitlab-cidr-range" {
+  type        = list(string)
+  default     = ["34.74.90.64/28", "34.74.226.0/24"]
+  description = "GitLab.com is using the IP range 34.74.90.64/28 & 34.74.226.0/24 for traffic from its Web/API fleet."
+}
