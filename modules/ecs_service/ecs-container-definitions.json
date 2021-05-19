@@ -54,6 +54,14 @@
       {
         "name": "GITLAB_WEBHOOK_TOKEN",
         "valueFrom": "/${name}/${environment}/gitlab/webhook-token"
+      },
+      {
+        "name": "BITBUCKET_TOKEN",
+        "valueFrom": "/${name}/${environment}/bitbucket/token"
+      },
+      {
+        "name": "BITBUCKET_WEBHOOK_TOKEN",
+        "valueFrom": "/${name}/${environment}/bitbucket/webhook-token"
       }
     ]
   }
