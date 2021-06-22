@@ -2,8 +2,8 @@ data "aws_availability_zones" "available" {}
 
 data "aws_caller_identity" "current" {}
 
-data "aws_s3_bucket" "cimpress-security-flowlogs" {
-  bucket = var.flow_log_bucket != "" ? var.flow_log_bucket : "cimpress-security-flowlogs-${data.aws_caller_identity.current.account_id}"
+locals {
+  bucket_name = var.flow_log_bucket != "" ? var.flow_log_bucket : "cimpress-security-flowlogs-${data.aws_caller_identity.current.account_id}"
 }
 
 module "vpc" {
@@ -25,7 +25,7 @@ module "vpc" {
 }
 
 resource "aws_flow_log" "aws_flowlogs" {
-  log_destination      = "${data.aws_s3_bucket.cimpress-security-flowlogs.arn}/${module.vpc.vpc_id}/"
+  log_destination      = "arn:aws:s3:::${local.bucket_name}/${module.vpc.vpc_id}/"
   log_destination_type = "s3"
   traffic_type         = "ALL"
   vpc_id               = module.vpc.vpc_id
