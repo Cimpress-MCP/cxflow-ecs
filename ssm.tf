@@ -127,6 +127,32 @@ resource "aws_ssm_parameter" "gitlab_webhook_token" {
   }
 }
 
+resource "aws_ssm_parameter" "bitbucket_token" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/bitbucket/token"
+  description = "The token used by CxFlow to log back into Bitbucket and push out changes"
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = local.all_tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
+resource "aws_ssm_parameter" "bitbucket_webhook_token" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/bitbucket/webhook-token"
+  description = "Preshared secret between Bitbucket and CxFlow - include in the webhook URL for authentication"
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = var.tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
 resource "aws_ssm_parameter" "client_id" {
   for_each    = var.environments
   name        = "/${var.name}/${each.key}/gitlab/client_id"
@@ -146,7 +172,7 @@ resource "aws_ssm_parameter" "client_secret" {
   description = "Auth0 Client Secret for making Auth0 calls from groovy scripts"
   type        = "SecureString"
   value       = "Filler"
-  tags        = var.tags
+  tags        = local.all_tags
 
   lifecycle {
     ignore_changes = [value]

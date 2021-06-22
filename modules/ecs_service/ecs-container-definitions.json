@@ -56,6 +56,14 @@
         "valueFrom": "/${name}/${environment}/gitlab/webhook-token"
       },
       {
+        "name": "BITBUCKET_TOKEN",
+        "valueFrom": "/${name}/${environment}/bitbucket/token"
+      },
+      {
+        "name": "BITBUCKET_WEBHOOK_TOKEN",
+        "valueFrom": "/${name}/${environment}/bitbucket/webhook-token"
+      },
+      {
         "name": "AUTH0_CLIENT_ID",
         "valueFrom": "/${name}/${environment}/auth0/client_id"
       },
