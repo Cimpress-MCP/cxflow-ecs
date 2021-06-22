@@ -126,3 +126,29 @@ resource "aws_ssm_parameter" "gitlab_webhook_token" {
     ignore_changes = [value]
   }
 }
+
+resource "aws_ssm_parameter" "client_id" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/gitlab/client_id"
+  description = "Auth0 Client ID for making Auth0 calls from groovy scripts"
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = var.tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
+resource "aws_ssm_parameter" "client_secret" {
+  for_each    = var.environments
+  name        = "/${var.name}/${each.key}/gitlab/client_secret"
+  description = "Auth0 Client Secret for making Auth0 calls from groovy scripts"
+  type        = "SecureString"
+  value       = "Filler"
+  tags        = var.tags
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
