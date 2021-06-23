@@ -155,7 +155,7 @@ resource "aws_ssm_parameter" "bitbucket_webhook_token" {
 
 resource "aws_ssm_parameter" "client_id" {
   for_each    = var.environments
-  name        = "/${var.name}/${each.key}/gitlab/client_id"
+  name        = "/${var.name}/${each.key}/auth0/client_id"
   description = "Auth0 Client ID for making Auth0 calls from groovy scripts"
   type        = "SecureString"
   value       = "Filler"
@@ -168,7 +168,7 @@ resource "aws_ssm_parameter" "client_id" {
 
 resource "aws_ssm_parameter" "client_secret" {
   for_each    = var.environments
-  name        = "/${var.name}/${each.key}/gitlab/client_secret"
+  name        = "/${var.name}/${each.key}/auth0/client_secret"
   description = "Auth0 Client Secret for making Auth0 calls from groovy scripts"
   type        = "SecureString"
   value       = "Filler"
