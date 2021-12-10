@@ -13,7 +13,7 @@ resource "aws_security_group" "alb" {
     protocol    = "tcp"
     from_port   = 443
     to_port     = 443
-    cidr_blocks = "${var.gitlab-cidr-range}"
+    cidr_blocks = var.gitlab-cidr-range
   }
 
   egress {
