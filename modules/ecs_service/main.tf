@@ -77,8 +77,8 @@ resource "aws_ecs_task_definition" "cxflow" {
   execution_role_arn       = var.ecs_role_arn
   task_role_arn            = var.ecs_role_arn
   network_mode             = "awsvpc"
-  memory                   = "2048"
-  cpu                      = "512"
+  memory                   = var.task_definition_cxflow_memory
+  cpu                      = var.task_definition_cxflow_cpu
   requires_compatibilities = ["FARGATE"]
 
   tags = var.tags
