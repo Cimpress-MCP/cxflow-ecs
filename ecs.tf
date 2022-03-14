@@ -29,5 +29,8 @@ module "cxflow_service" {
   lb_listener_arn       = aws_lb_listener.cxflow.arn
   tags                  = local.all_tags
 
+  task_definition_cxflow_cpu    = var.task_definition_cxflow_cpu
+  task_definition_cxflow_memory = var.task_definition_cxflow_memory
+
   depends_on = [aws_lb.cxflow]
 }
