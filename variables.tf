@@ -113,3 +113,22 @@ variable "gitlab-cidr-range" {
   default     = ["34.74.90.64/28", "34.74.226.0/24"]
   description = "GitLab.com is using the IP range 34.74.90.64/28 & 34.74.226.0/24 for traffic from its Web/API fleet."
 }
+
+# CPU value 	  | Memory value (MiB)
+# 256 (.25 vCPU)| 512 (0.5GB), 1024 (1GB), 2048 (2GB)
+# 512 (.5 vCPU) |	1024 (1GB), 2048 (2GB), 3072 (3GB), 4096 (4GB)
+# 1024 (1 vCPU) | 2048 (2GB), 3072 (3GB), 4096 (4GB), 5120 (5GB), 6144 (6GB), 7168 (7GB), 8192 (8GB)
+# 2048 (2 vCPU) |	Between 4096 (4GB) and 16384 (16GB) in increments of 1024 (1GB)
+# 4096 (4 vCPU) |	Between 8192 (8GB) and 30720 (30GB) in increments of 1024 (1GB)
+
+variable "task_definition_cxflow_cpu" {
+  type        = number
+  description = "Specify a supported value for the task CPU units, 256,512,1024,2048 etc"
+  default     = "512"
+}
+
+variable "task_definition_cxflow_memory" {
+  type        = number
+  description = "Specify a supported value for the task Memory units - 512,1024,2048 etc"
+  default     = "2048"
+}
